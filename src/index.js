@@ -1,23 +1,23 @@
-
 const constant = require('./common/constant')
-const fileService = require("./common/file.service");
+const fileService = require("./common/io_services");
 const parkingLot = require("../src/parking_lot/service")
 
 const main = () => {
     try {
 
         const dataProcessed = fileService.readInputFile(process.argv[2]);
-        console.log(dataProcessed)
+        console.log("dataProcessed: ", dataProcessed);
         let isCreated = false;
-        let parkData;
+        let parkArea = {};
         dataProcessed.forEach(event => {
             switch (event[0]) {
                 case constant.INIT:
-                    parkData = parkingLot.init(event, isCreated);
-                    console.log("QQQQQQ: ", parkData)
+                    parkArea = parkingLot.init(event, isCreated);
+                    console.log("parkArea: ", parkArea);
                     isCreated = true;
                     break;
                 case constant.PARK:
+                    parkingLot.park(event, parkArea);
                     console.log("Allocated slot number: 1");
                     break;
                 case constant.LEAVE:
