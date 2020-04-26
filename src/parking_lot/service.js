@@ -4,7 +4,10 @@ const init = function (event, isCreated) {
         throw new Error("Parking lot has been created")
     }
     const capacity = event[1];
-    // todo: check valid of capacity value;
+    if(!isValidCapacity(capacity)){
+        throw new Error("Create the parking lot failed, capacity is invalid !!!")
+    }
+    // todo: make  an one service handle print something;
     console.log(`Created parking lot with ${capacity} slots`);
     return { capacity, parkingLotData: [] };
 }
