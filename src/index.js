@@ -18,7 +18,6 @@ const main = () => {
                     break;
                 case constant.PARK:
                     parkingLot.park(event, parkArea);
-                    console.log("Allocated slot number: 1");
                     break;
                 case constant.LEAVE:
                     console.log("Registration number KA-01-HH-3141 with Slot Number 6 is free with Charge 30");
@@ -36,10 +35,8 @@ const main = () => {
             }
         });
     } catch (error) {
-        console.log("Something went wrong: ", error)
+        console.log("Something went wrong: ", error.message)
     }
 }
 
 main();
-
-console.log('after calling readFile');
