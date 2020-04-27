@@ -8,30 +8,35 @@ const main = () => {
         let isCreated = false;
         let parkArea = {};
         dataProcessed.forEach(event => {
-            switch (event[0]) {
-                case constant.INIT:
-                    parkArea = parkingLot.init(event, isCreated);
-                    isCreated = true;
-                    break;
-                case constant.PARK:
-                    isCreated ? parkArea = parkingLot.park(event, parkArea) :
-                        console.log("please input the create parking lot first")
-                    break;
-                case constant.LEAVE:
-                    isCreated ?
-                        parkArea = parkingLot.leave(event, parkArea) :
-                        console.log("please input the create parking lot first")
-                    break;
-                case constant.STATUS:
-                    isCreated ? parkingLot.status(parkArea) :
-                        console.log("please input the create parking lot first")
-                    break;
-                default:
-                    console.log("please input a valid event:  create_parking_lot | park | leave | status")
+            const eventType = event[0];
+            if (eventType == constant.INIT) {
+                parkArea = parkingLot.init(event, isCreated);
+                isCreated = true;
+                return parkArea;
             }
+            
+            if (!isCreated) {
+                throw new Error("please input the create parking lot first")
+            }
+
+            if (eventType == constant.PARK) {
+                parkArea = parkingLot.park(event, parkArea);
+                return parkArea;
+            }
+
+            if (eventType == constant.LEAVE) {
+                parkArea = parkingLot.leave(event, parkArea);
+                return parkArea;
+            }
+
+            if (eventType == constant.STATUS) {
+                parkingLot.status(parkArea);
+                return parkArea;
+            }
+            throw new Error("please input a valid event:  create_parking_lot | park | leave | status");
         });
     } catch (error) {
-        console.log("Something went wrong: ", error)
+        console.log("Something went wrong: ", error.message)
     }
 }
 
