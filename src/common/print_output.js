@@ -3,7 +3,7 @@ const initParkinglot = function (capacity) {
     console.log(`Created parking lot with ${capacity} slots`);
 }
 const allocatedCar = function (slotToBeAllocated) {
-    console.log("Allocated slot number: ", slotToBeAllocated);
+    console.log(`Allocated slot number: ${slotToBeAllocated}`);
 }
 const carLeaves = function (carId, slot, charge) {
     console.log(`Registration number ${carId} with Slot Number ${slot} is free with Charge ${charge}`);

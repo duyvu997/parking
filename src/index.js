@@ -2,7 +2,7 @@ const constant = require('./common/constant')
 const fileService = require("./common/io_services");
 const parkingLot = require("../src/parking_lot/service")
 
-const main = () => {
+const main = function () {
     try {
         const dataProcessed = fileService.readInputFile(process.argv[2]);
         let isCreated = false;
@@ -14,9 +14,9 @@ const main = () => {
                 isCreated = true;
                 return parkArea;
             }
-            
+
             if (!isCreated) {
-                throw new Error("please input the create parking lot first")
+                throw new Error("please input the create parking lot first");
             }
 
             if (eventType == constant.PARK) {
@@ -36,8 +36,7 @@ const main = () => {
             throw new Error("please input a valid event:  create_parking_lot | park | leave | status");
         });
     } catch (error) {
-        console.log("Something went wrong: ", error.message)
+        console.log(`Something went wrong: ${error.message}`)
     }
 }
-
-main();
+module.exports.main = main;
