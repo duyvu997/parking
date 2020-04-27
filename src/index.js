@@ -35,7 +35,7 @@ const main = () => {
             }
         });
     } catch (error) {
-        console.log("Something went wrong: ", error.message)
+        console.log("Something went wrong: ", error)
     }
 }
 

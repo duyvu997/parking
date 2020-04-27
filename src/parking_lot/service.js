@@ -1,5 +1,5 @@
 const utils = require("../common/utils");
-const constant =  require("../common/constant");
+const constant = require("../common/constant");
 const genarateInitData = function (capacity) {
     const data = []
     for (let i = 1; i <= capacity; i++) {
@@ -29,14 +29,19 @@ const park = function (event, parkArea) {
     const carId = event[1];
 
     const { parkingLotData } = parkArea;
-    if (utils.isFull(parkingLotData)) {
+    const indexOfAvailableSlot = parkingLotData.findIndex((item) =>
+        (item.status == constant.ParkingStatus.AVAILABLE)
+    );
+    if (indexOfAvailableSlot == -1) {
         console.log("Sorry, parking lot is full");
         return;
-    };
-    
-    parkingLotData.push({ position, carId });
+    }
+
+    console.log("available slot: ", parkingLotData[indexOfAvailableSlot].position)
+    parkingLotData[indexOfAvailableSlot].status = carId;
     // todo: make  an one service handle print something;
-    console.log("Allocated slot number: ", position)
+    console.log("Allocated slot number: ", parkingLotData[indexOfAvailableSlot].position);
+    console.log(parkingLotData)
     return parkArea;
 
 }
