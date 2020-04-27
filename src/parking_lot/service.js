@@ -1,5 +1,6 @@
 const utils = require("../common/utils");
 const constant = require("../common/constant");
+const chargeService =  require("./parking_fee_services");
 const genarateInitData = function (capacity) {
     const data = []
     for (let i = 1; i <= capacity; i++) {
@@ -49,8 +50,7 @@ const leave = function (event, parkArea) {
     // todo: add one service to check valid input
     const carId = event[1];
     const parkingTime = event[2];
-    // const charge = chargeService.calculate(parkingTime);
-    const charge = 30;
+    const charge = chargeService.calculateCharge(parkingTime);
     const { parkingLotData } = parkArea;
     const idxOfCar = parkingLotData.findIndex((item) =>
         (item.status == carId)
