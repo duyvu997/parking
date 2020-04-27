@@ -1,4 +1,8 @@
 const initParkinglot = function (capacity) {
     console.log(`Created parking lot with ${capacity} slots`);
 }
-module.exports.initParkinglot = initParkinglot
+const allocatedACar = function (slotToBeAllocated) {
+    console.log("Allocated slot number: ", slotToBeAllocated);
+}
+module.exports.initParkinglot = initParkinglot;
+module.exports.allocatedACar = allocatedACar;

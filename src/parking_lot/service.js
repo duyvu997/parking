@@ -21,9 +21,8 @@ const init = function (event, isCreated) {
 }
 
 const park = function (event, parkArea) {
-    // todo: add one service to check valid input
-    const carId = event[1];
-
+    
+    const carId = utils.transformAndValidateParkEvent(event);
     const { parkingLotData } = parkArea;
     const indexOfAvailableSlot = parkingLotData.findIndex((item) =>
         (item.status == constant.ParkingStatus.AVAILABLE)
@@ -32,15 +31,11 @@ const park = function (event, parkArea) {
         console.log("Sorry, parking lot is full");
         return parkArea;
     }
-
-    console.log("available slot: ", parkingLotData[indexOfAvailableSlot].position)
     parkingLotData[indexOfAvailableSlot].status = carId;
-    // todo: make  an one service handle print something;
-    console.log("Allocated slot number: ", parkingLotData[indexOfAvailableSlot].position);
-    console.log(parkingLotData)
+    printOutput.allocatedACar(parkingLotData[indexOfAvailableSlot].position)
     return parkArea;
-
 }
+
 const leave = function (event, parkArea) {
     // todo: add one service to check valid input
     const carId = event[1];
