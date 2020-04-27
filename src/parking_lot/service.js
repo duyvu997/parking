@@ -34,7 +34,7 @@ const park = function (event, parkArea) {
     );
     if (indexOfAvailableSlot == -1) {
         console.log("Sorry, parking lot is full");
-        return;
+        return parkArea;
     }
 
     console.log("available slot: ", parkingLotData[indexOfAvailableSlot].position)
@@ -47,10 +47,22 @@ const park = function (event, parkArea) {
 }
 const leave = function (event, parkArea) {
     // todo: add one service to check valid input
-    // const cardId = event[1];
-    // const parkingTime = event[2];
+    const carId = event[1];
+    const parkingTime = event[2];
     // const charge = chargeService.calculate(parkingTime);
+    const charge = 30;
+    const { parkingLotData } = parkArea;
+    const idxOfCar = parkingLotData.findIndex((item) =>
+        (item.status == carId)
+    );
+    if (idxOfCar == -1) {
+        console.log(`Registration number ${carId} not found`);
+        return parkArea;
+    }
+    parkingLotData[idxOfCar].status = constant.ParkingStatus.AVAILABLE;
+    console.log(`Registration number ${carId} with Slot Number ${parkingLotData[idxOfCar].position} is free with Charge ${charge}`);
     // todo: make  an one service handle print something;
+    return parkArea;
 
 }
 const status = function () {
@@ -61,4 +73,6 @@ const status = function () {
 
 module.exports.init = init;
 module.exports.park = park;
+module.exports.leave = leave;
+
 
