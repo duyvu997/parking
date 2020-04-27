@@ -1,12 +1,9 @@
 const utils = require("../common/utils");
-const ParkingStatus = {
-    AVAILABLE = "AVAILABLE",
-    UNAVAILABLE =  "UNAVAILABLE"
-}
+const constant =  require("../common/constant");
 const genarateInitData = function (capacity) {
     const data = []
     for (let i = 1; i <= capacity; i++) {
-        data.push({ position: i, status: parkingLotData.AVAILABLE })
+        data.push({ position: i, status: constant.ParkingStatus.AVAILABLE })
     }
     return data;
 }
@@ -29,13 +26,14 @@ const init = function (event, isCreated) {
 
 const park = function (event, parkArea) {
     // todo: add one service to check valid input
-    const { capacity, parkingLotData } = parkArea;
-    if (utils.isFull(capacity, parkingLotData)) {
+    const carId = event[1];
+
+    const { parkingLotData } = parkArea;
+    if (utils.isFull(parkingLotData)) {
         console.log("Sorry, parking lot is full");
         return;
     };
-    const carId = event[1];
-    const position = parkingLotData.length + 1;
+    
     parkingLotData.push({ position, carId });
     // todo: make  an one service handle print something;
     console.log("Allocated slot number: ", position)
