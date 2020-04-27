@@ -37,32 +37,33 @@ const park = function (event, parkArea) {
 }
 
 const leave = function (event, parkArea) {
-    // todo: add one service to check valid input
-    const carId = event[1];
-    const parkingTime = event[2];
-    const charge = chargeService.calculateCharge(parkingTime);
+
     const { parkingLotData } = parkArea;
+    const {carId, parkingTime} = utils.transformAndValidateLeaveEvent(event)
+    const charge = chargeService.calculateCharge(parkingTime);
+
     const idxOfCar = parkingLotData.findIndex((item) =>
         (item.status == carId)
     );
+
     if (idxOfCar == -1) {
         console.log(`Registration number ${carId} not found`);
         return parkArea;
     }
+
     parkingLotData[idxOfCar].status = constant.ParkingStatus.AVAILABLE;
-    console.log(`Registration number ${carId} with Slot Number ${parkingLotData[idxOfCar].position} is free with Charge ${charge}`);
-    // todo: make  an one service handle print something;
+
+    printOutput.aCarLeaved(carId, parkingLotData[idxOfCar].position, charge);
     return parkArea;
-
 }
-const status = function () {
-    // todo: add one service to check valid input
-
-
+const status = function (parkArea) {
+    printOutput.parkingStatus(parkArea);
 }
 
 module.exports.init = init;
 module.exports.park = park;
 module.exports.leave = leave;
+module.exports.status = status;
+
 
 
