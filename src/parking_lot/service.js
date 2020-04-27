@@ -1,6 +1,7 @@
 const utils = require("../common/utils");
 const constant = require("../common/constant");
-const chargeService =  require("./parking_fee_services");
+const chargeService = require("./parking_fee_services");
+const printOutput =  require("../common/print_output");
 const genarateInitData = function (capacity) {
     const data = []
     for (let i = 1; i <= capacity; i++) {
@@ -10,18 +11,12 @@ const genarateInitData = function (capacity) {
 }
 
 const init = function (event, isCreated) {
-    // todo: add one service to check valid input
-
+    const capacity = utils.transformAndValidateInitEvent(event);
     if (isCreated) {
         throw new Error("Parking lot has been created")
     }
-    const capacity = event[1];
-    if (!utils.isValidCapacity(capacity)) {
-        throw new Error("Create the parking lot failed, capacity is invalid !!!")
-    }
     const parkingLotData = genarateInitData(capacity);
-    // todo: make  an one service handle print something;
-    console.log(`Created parking lot with ${capacity} slots`);
+    printOutput.initParkinglot(capacity);
     return { capacity, parkingLotData };
 }
 
