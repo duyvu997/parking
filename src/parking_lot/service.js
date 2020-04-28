@@ -1,7 +1,7 @@
 const utils = require("../common/utils");
 const constant = require("../common/constant");
 const chargeService = require("./parking_fee_services");
-const printOutput =  require("../common/print_output");
+const printOutput = require("../common/print_output");
 
 const genarateInitData = function (capacity) {
     const data = []
@@ -22,9 +22,15 @@ const init = function (event, isCreated) {
 }
 
 const park = function (event, parkArea) {
-    
+
     const carId = utils.transformAndValidateParkEvent(event);
     const { parkingLotData } = parkArea;
+    const isCarExist = parkingLotData.find((item) =>
+        (item.status == carId)
+    );
+    if (isCarExist) {
+        throw new Error("car already exist in parking lot")
+    }
     const indexOfAvailableSlot = parkingLotData.findIndex((item) =>
         (item.status == constant.SlotStatus.AVAILABLE)
     );
@@ -40,7 +46,7 @@ const park = function (event, parkArea) {
 const leave = function (event, parkArea) {
 
     const { parkingLotData } = parkArea;
-    const {carId, parkingTime} = utils.transformAndValidateLeaveEvent(event)
+    const { carId, parkingTime } = utils.transformAndValidateLeaveEvent(event)
     const charge = chargeService.calculateCharge(parkingTime);
 
     const idxOfCar = parkingLotData.findIndex((item) =>
